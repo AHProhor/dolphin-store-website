@@ -9,12 +9,11 @@ const loadProducts = () => {
 const showProducts = (products) => {
   const allProducts = products.map((pd) => pd);
   for (const product of allProducts) {
-    const image = product.images;
     const div = document.createElement("div");
     div.classList.add("product");
     div.innerHTML = `<div class="single-product">
       <div>
-    <img class="product-image" src=${image}></img>
+    <img class="product-image" src=${product.image}></img>
       </div>
       <h3>${product.title}</h3>
       <p>Category: ${product.category}</p>
@@ -68,13 +67,16 @@ const updateTaxAndCharge = () => {
     setInnerText("delivery-charge", 60);
     setInnerText("total-tax", priceConverted * 0.4);
   }
+  return priceConverted;
 };
 
 //grandTotal update function
 const updateTotal = () => {
+  const productPrice = updateTaxAndCharge();
+  console.log(productPrice);
   const grandTotal =
-    getInputValue("price") + getInputValue("delivery-charge") +
-    getInputValue("total-tax");
+    getInputValue("price".value) + getInputValue("delivery-charge".value) +
+    getInputValue("total-tax".value);
   document.getElementById("total").innerText = grandTotal;
 };
 loadProducts();
