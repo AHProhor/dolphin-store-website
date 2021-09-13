@@ -21,7 +21,7 @@ const showProducts = (products) => {
       <h4> Rating Given by: ${product.rating.count}</h4>
       <h2>Price: $ ${product.price}</h2>
       <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-primary">add to cart</button>
-      <button id="details-btn" class="btn btn-info">Details</button></div>
+      <button onclick="productDetails(${product.id})" id="details-btn" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Details</button></div>
       `;
     document.getElementById("all-products").appendChild(div);
   }
@@ -35,6 +35,24 @@ const addToCart = (id, price) => {
   document.getElementById("total-Products").innerText = count;
   updateTotal();
 };
+
+const productDetails = (id) =>{
+  fetch(`https://fakestoreapi.com/products/${id}`)
+            .then(res=>res.json())
+            .then(data=>showdata(data))
+}
+
+function showdata(value){
+  const div = document.createElement("div");
+    div.innerHTML = 
+    `
+      <h4>${value.title}</h4>
+      <p>Category: ${value.category}</p>
+      <h4> Rating rate: ${value.rating.rate}</h4>
+      <h4> Rating Given by: ${value.rating.count}</h4>
+      <h2>Price: $ ${value.price}</h2>`
+      document.getElementById("modal-body").appendChild(div);
+}
 
 
 const getInputValue = (id) => {
